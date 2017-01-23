@@ -42,12 +42,12 @@ def output_courses_info_to_xlsx(all_courses_info_list):
     ex_page_1['F1'] = 'Rating'
     row = 2
     for course_info in all_courses_info_list:
-        ex_page_1['A' + row] = course_info[0]
-        ex_page_1['B' + row] = course_info[1]
-        ex_page_1['C' + row] = course_info[2]
-        ex_page_1['D' + row] = course_info[3]
-        ex_page_1['E' + row] = course_info[4]
-        ex_page_1['F' + row] = course_info[5]
+        ex_page_1['A' + str(row)] = course_info[0]
+        ex_page_1['B' + str(row)] = course_info[1]
+        ex_page_1['C' + str(row)] = course_info[2]
+        ex_page_1['D' + str(row)] = course_info[3]
+        ex_page_1['E' + str(row)] = course_info[4]
+        ex_page_1['F' + str(row)] = course_info[5]
         row += 1
     excel_file.save('Courses.xlsx')
 
