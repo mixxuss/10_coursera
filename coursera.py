@@ -73,31 +73,3 @@ if __name__ == '__main__':
     all_course_info_list = get_course_info(get_courses_list(url, courses_amount))
     output_courses_info_to_xlsx(all_course_info_list)
 
-
-
-
-
-
-
-    # print(get_course_info(get_courses_list(url, courses_amount)))
-    # excel = Workbook()
-    # filename = 'test.xlsx'
-    # ws1 = excel.active
-    # ws1.title = 'Coursera'
-    # ws1['A1'] = 'This is A1'
-    # ws1['B1'] = 'This is B1'
-    # excel.save(filename=filename)
-
-
-
-
-
-
-    # course_url = 'https://www.coursera.org/learn/story-writing-project'
-    # course_html = requests.get(course_url)
-    # page_1 = lxml.html.document_fromstring(course_html.text)
-    # print(len(page_1.find_class('week')))
-    # print(page_1.find_class('ratings-text bt3-visible-xs')[0].text_content())
-    # print(page_1.find_class('startdate rc-StartDateString caption-text')[0].text_content())
-    # print(page_1.find_class('language-info')[0].text_content())
-    # print(page_1.find_class('title display-3-text')[0].text_content())
