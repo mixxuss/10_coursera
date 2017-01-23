@@ -1,6 +1,6 @@
 # Coursera Dump
 
-[TODO. There will be project description]
+This program choose random 5 courses from Coursera xml sitemap, getting info (url, name, language, start date, length, rating) from course page and output to xlsx file and put it to program folder.
 
 # Project Goals
 
