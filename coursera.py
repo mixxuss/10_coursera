@@ -20,11 +20,26 @@ def get_course_info(courses_url_list):
     for course_url in courses_url_list:
         course_request = requests.get(course_url)
         course_page = lxml.html.document_fromstring(course_request.text)
-        course_name = course_page.find_class('title display-3-text')[0].text_content()
-        course_lang = course_page.find_class('language-info')[0].text_content()
-        course_starts = course_page.find_class('startdate rc-StartDateString caption-text')[0].text_content()
-        course_length = len(course_page.find_class('week'))
-        course_rating = course_page.find_class('ratings-text bt3-visible-xs')[0].text_content()
+        try:
+            course_name = course_page.find_class('title display-3-text')[0].text_content()
+        except IndexError:
+            course_name = None
+        try:
+            course_lang = course_page.find_class('language-info')[0].text_content()
+        except IndexError:
+            course_lang = None
+        try:
+            course_starts = course_page.find_class('startdate rc-StartDateString caption-text')[0].text_content()
+        except IndexError:
+            course_starts = None
+        try:
+            course_length = len(course_page.find_class('week'))
+        except IndexError:
+            course_length = None
+        try:
+            course_rating = course_page.find_class('ratings-text bt3-visible-xs')[0].text_content()
+        except IndexError:
+            course_rating = None
         course_sum = (course_url, course_name, course_lang, course_starts, course_length, course_rating)
         all_courses_info_list.append(course_sum)
     return all_courses_info_list
@@ -38,7 +53,7 @@ def output_courses_info_to_xlsx(all_courses_info_list):
     ex_page_1['B1'] = 'Name'
     ex_page_1['C1'] = 'Language'
     ex_page_1['D1'] = 'Start date'
-    ex_page_1['E1'] = 'Length'
+    ex_page_1['E1'] = 'Length (weeks)'
     ex_page_1['F1'] = 'Rating'
     row = 2
     for course_info in all_courses_info_list:
