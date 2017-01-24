@@ -30,27 +30,20 @@ def get_courses_info_from_list(courses_list):
     return all_course_info_list
 
 
+def get_course_class_content(course_page, class_name):
+    try:
+        return course_page.find_class(class_name)[0].text_content()
+    except IndexError:
+        return None
+
+
+
 def get_course_info(course_page):
-    try:
-        course_name = course_page.find_class('title display-3-text')[0].text_content()
-    except IndexError:
-        course_name = None
-    try:
-        course_lang = course_page.find_class('language-info')[0].text_content()
-    except IndexError:
-        course_lang = None
-    try:
-        course_starts = course_page.find_class('startdate rc-StartDateString caption-text')[0].text_content()
-    except IndexError:
-        course_starts = None
-    try:
-        course_length = len(course_page.find_class('week'))
-    except IndexError:
-        course_length = None
-    try:
-        course_rating = course_page.find_class('ratings-text bt3-visible-xs')[0].text_content()
-    except IndexError:
-        course_rating = None
+    course_name = get_course_class_content(course_page, 'title display-3-text')
+    course_lang = get_course_class_content(course_page, 'language-info')
+    course_starts = get_course_class_content(course_page, 'startdate rc-StartDateString caption-text')
+    course_rating = get_course_class_content(course_page, 'ratings-text bt3-visible-xs')
+    course_length = len(course_page.find_class('week'))
     course_sum = (course_name, course_lang, course_starts, course_length, course_rating)
     return course_sum
 
