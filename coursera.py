@@ -37,7 +37,6 @@ def get_course_class_content(course_page, class_name):
         return None
 
 
-
 def get_course_info(course_page):
     course_name = get_course_class_content(course_page, 'title display-3-text')
     course_lang = get_course_class_content(course_page, 'language-info')
