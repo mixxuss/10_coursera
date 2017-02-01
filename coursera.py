@@ -35,7 +35,11 @@ def get_course_info(course_page):
     course_starts = get_course_class_content(course_page, 'startdate rc-StartDateString caption-text')
     course_rating = get_course_class_content(course_page, 'ratings-text bt3-visible-xs')
     course_length = len(course_page.find_class('week'))
-    course_sum = (course_name, course_lang, course_starts, course_length, course_rating)
+    course_sum = {'Name': course_name,
+                  'Lang': course_lang,
+                  'Starts': course_starts,
+                  'Length': course_length,
+                  'Rating': course_rating}
     return course_sum
 
 
@@ -64,11 +68,11 @@ def output_courses_info_to_xlsx(all_courses_info_list, excel_file):
     ex_page_1 = excel_file.active
     row = 2
     for course_info in all_courses_info_list:
-        ex_page_1['A' + str(row)] = course_info[0]
-        ex_page_1['B' + str(row)] = course_info[1]
-        ex_page_1['C' + str(row)] = course_info[2]
-        ex_page_1['D' + str(row)] = course_info[3]
-        ex_page_1['E' + str(row)] = course_info[4]
+        ex_page_1['A' + str(row)] = course_info['Name']
+        ex_page_1['B' + str(row)] = course_info['Lang']
+        ex_page_1['C' + str(row)] = course_info['Starts']
+        ex_page_1['D' + str(row)] = course_info['Length']
+        ex_page_1['E' + str(row)] = course_info['Rating']
         row += 1
     excel_file.save('Courses.xlsx')
 
