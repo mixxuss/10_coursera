@@ -5,13 +5,10 @@ import random
 import requests
 
 
-def get_courses_list(url, courses_amount):
+def get_random_courses_list(url, courses_amount):
     xml_request = requests.get(url)
     root = etree.XML(xml_request.content)
-    courses_list = []
-    for child in root:
-        for link in child:
-            courses_list.append(link.text)
+    courses_list = [link.text for child in root for link in child]
     return random.sample(courses_list, courses_amount)
 
 
@@ -22,12 +19,7 @@ def download_course(course_url):
 
 
 def get_courses_info_from_list(courses_list):
-    all_course_info_list = []
-    for course in courses_list:
-        course_page = download_course(course)
-        course_info = get_course_info(course_page)
-        all_course_info_list.append(course_info)
-    return all_course_info_list
+    return [get_course_info(download_course(course)) for course in courses_list]
 
 
 def get_course_class_content(course_page, class_name):
@@ -47,7 +39,7 @@ def get_course_info(course_page):
     return course_sum
 
 
-def output_courses_info_to_xlsx(all_courses_info_list):
+def create_xslx_file_template():
     excel_file = Workbook()
     ex_page_1 = excel_file.active
     ex_page_1.title = 'Coursera random courses info'
@@ -56,6 +48,20 @@ def output_courses_info_to_xlsx(all_courses_info_list):
     ex_page_1['C1'] = 'Start date'
     ex_page_1['D1'] = 'Length (weeks)'
     ex_page_1['E1'] = 'Rating'
+    return excel_file
+
+
+def output_courses_info_to_xlsx(all_courses_info_list, excel_file):
+    '''excel_file = Workbook()
+    ex_page_1 = excel_file.active
+    ex_page_1.title = 'Coursera random courses info'
+    ex_page_1['A1'] = 'Name'
+    ex_page_1['B1'] = 'Language'
+    ex_page_1['C1'] = 'Start date'
+    ex_page_1['D1'] = 'Length (weeks)'
+    ex_page_1['E1'] = 'Rating'
+    '''
+    ex_page_1 = excel_file.active
     row = 2
     for course_info in all_courses_info_list:
         ex_page_1['A' + str(row)] = course_info[0]
@@ -70,6 +76,7 @@ def output_courses_info_to_xlsx(all_courses_info_list):
 if __name__ == '__main__':
     url = 'https://www.coursera.org/sitemap~www~courses.xml'
     courses_amount = 5
-    courses_list = get_courses_list(url, courses_amount)
+    courses_list = get_random_courses_list(url, courses_amount)
     all_course_info_list = get_courses_info_from_list(courses_list)
-    output_courses_info_to_xlsx(all_course_info_list)
+    excel_file = create_xslx_file_template()
+    output_courses_info_to_xlsx(all_course_info_list, excel_file)
