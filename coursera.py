@@ -55,26 +55,16 @@ def create_xslx_file_template():
     return excel_file
 
 
-def output_courses_info_to_xlsx(all_courses_info_list, excel_file):
-    '''excel_file = Workbook()
+def output_courses_info_to_xlsx(all_courses_info_list, excel_file, output_file_name='Courses.xlsx'):
     ex_page_1 = excel_file.active
-    ex_page_1.title = 'Coursera random courses info'
-    ex_page_1['A1'] = 'Name'
-    ex_page_1['B1'] = 'Language'
-    ex_page_1['C1'] = 'Start date'
-    ex_page_1['D1'] = 'Length (weeks)'
-    ex_page_1['E1'] = 'Rating'
-    '''
-    ex_page_1 = excel_file.active
-    row = 2
-    for course_info in all_courses_info_list:
+    for row, course_info in enumerate(all_courses_info_list, start=2):
         ex_page_1['A' + str(row)] = course_info['Name']
         ex_page_1['B' + str(row)] = course_info['Lang']
         ex_page_1['C' + str(row)] = course_info['Starts']
         ex_page_1['D' + str(row)] = course_info['Length']
         ex_page_1['E' + str(row)] = course_info['Rating']
-        row += 1
-    excel_file.save('Courses.xlsx')
+    excel_file.save(output_file_name)
+    print('File %s saved' % output_file_name)
 
 
 if __name__ == '__main__':
