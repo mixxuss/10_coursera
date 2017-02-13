@@ -4,7 +4,10 @@ This program choose random 5 courses from Coursera xml sitemap, getting info (ur
 
 #How to install requirement packages
 
-Packages installing by pip install -r requirements.txt command
+Packages installing by command: 
+```
+pip install -r requirements.txt 
+```
 
 # Example
 
