@@ -1,8 +1,8 @@
-from lxml import etree
-from openpyxl import Workbook
 import lxml.html
 import random
 import requests
+from lxml import etree
+from openpyxl import Workbook
 
 
 def get_random_courses_list(url, courses_amount):
@@ -55,7 +55,7 @@ def create_xslx_file_template():
     return excel_file
 
 
-def output_courses_info_to_xlsx(all_courses_info_list, excel_file, output_file_name='Courses.xlsx'):
+def output_courses_info_to_xlsx(all_courses_info_list, excel_file):
     ex_page_1 = excel_file.active
     for row, course_info in enumerate(all_courses_info_list, start=2):
         ex_page_1['A' + str(row)] = course_info['Name']
@@ -63,8 +63,16 @@ def output_courses_info_to_xlsx(all_courses_info_list, excel_file, output_file_n
         ex_page_1['C' + str(row)] = course_info['Starts']
         ex_page_1['D' + str(row)] = course_info['Length']
         ex_page_1['E' + str(row)] = course_info['Rating']
-    excel_file.save(output_file_name)
-    print('File %s saved' % output_file_name)
+    return excel_file
+
+
+def save_xlsx_file(excel_file, output_filename='Courses.xlsx'):
+    excel_file.save(output_filename)
+    return output_filename
+
+
+def print_saved_filename(output_filename):
+    print('File %s saved' % output_filename)
 
 
 if __name__ == '__main__':
@@ -72,5 +80,6 @@ if __name__ == '__main__':
     courses_amount = 5
     courses_list = get_random_courses_list(url, courses_amount)
     all_course_info_list = get_courses_info_from_list(courses_list)
-    excel_file = create_xslx_file_template()
-    output_courses_info_to_xlsx(all_course_info_list, excel_file)
+    excel_file_template = create_xslx_file_template()
+    excel_file = output_courses_info_to_xlsx(all_course_info_list, excel_file_template)
+    print_saved_filename(save_xlsx_file(excel_file))
