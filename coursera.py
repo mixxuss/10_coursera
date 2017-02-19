@@ -43,7 +43,7 @@ def get_course_info(course_page):
     return course_sum
 
 
-def create_xslx_file_template():
+def create_xslx_file_workbook():
     excel_file = Workbook()
     ex_page_1 = excel_file.active
     ex_page_1.title = 'Coursera random courses info'
@@ -80,6 +80,6 @@ if __name__ == '__main__':
     courses_amount = 5
     courses_list = get_random_courses_list(url, courses_amount)
     all_course_info_list = get_courses_info_from_list(courses_list)
-    excel_file_template = create_xslx_file_template()
+    excel_file_template = create_xslx_file_workbook()
     excel_file = output_courses_info_to_xlsx(all_course_info_list, excel_file_template)
     print_saved_filename(save_xlsx_file(excel_file))
